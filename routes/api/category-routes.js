@@ -11,12 +11,25 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
+  Category.findByPk(req.params.id, {
+    include: [
+      {
+        model: Product,
+      },
+    ],
+  }).then((categoryData) => {
+    if (categoryData) {
+      res.status(404).send();
+      return;
+    }
+    res.json(categoryData);
+  });
 });
 
 router.post("/", (req, res) => {
   // create a new category
   Category.create({
-    category_name: req.body.category_name,
+    category_name: req.body.categoryName,
   })
     .then((newCategory) => {
       res.json(newCategory);
