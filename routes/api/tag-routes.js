@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   Tag.findAll({
-    // include: { model: Product },
+    include: { model: Product },
   })
     .then((tagData) => {
       if (!tagData) {
@@ -25,11 +25,11 @@ router.get("/:id", (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
   Tag.findByPk(req.params.id, {
-    // include: [
-    //   {
-    //     model: Product,
-    //   },
-    // ],
+    include: [
+      {
+        model: Product,
+      },
+    ],
   })
     .then((tagData) => {
       if (!tagData) {
@@ -79,7 +79,7 @@ router.delete("/:id", (req, res) => {
   // delete on tag by its `id` value
   Tag.destroy({
     where: {
-      id: req.body.id,
+      id: req.params.id,
     },
   })
     .then((deletedTag) => {

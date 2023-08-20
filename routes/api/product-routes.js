@@ -5,7 +5,6 @@ const { Product, Category, Tag, ProductTag } = require("../../models");
 
 // get all products
 router.get("/", (req, res) => {
-  console.log(req.body);
   // find all products
   // be sure to include its associated Category and Tag data
   Product.findAll({
@@ -130,10 +129,10 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   // delete one product by its `id` value
-  console.log(req.body);
+
   Product.destroy({
     where: {
-      id: req.body.id,
+      id: req.params.id,
     },
   })
     .then((deletedProduct) => {
